@@ -21,6 +21,8 @@ using ..timeevolution
 const QuantumState{B} = Union{Ket{B}, Operator{B,B}}
 
 """
+    State(quantum, classical)
+
 Semi-classical state.
 
 It consists of a quantum part, which is either a `Ket` or a `DenseOperator` and
