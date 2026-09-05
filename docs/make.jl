@@ -16,6 +16,7 @@ end
 build_examples()
 
 using Documenter
+using DocumenterCodeBlocks
 using AnythingLLMDocs
 using QuantumInterface
 using QuantumOptics
@@ -102,6 +103,7 @@ makedocs(
     sitename = "QuantumOptics.jl",
     modules = doc_modules,
     pages = pages,
+    plugins = [CodeBlocks()],
     format = Documenter.HTML(
         assets = [
             asset("assets/favicon.png", class = :ico, islocal = true),
