@@ -63,7 +63,7 @@ function master_h_dynamic_function(H::AbstractTimeDependentOperator, Js)
 
     return let Hop = Htup, Jops = Js_tup, Jdops = Jdags_tup
         function _tdop_master_wrapper_1(t, _)
-            f = Base.Fix2(set_time!, t)
+            f = op -> set_time!(op, t)
             foreach(f, Jops)
             foreach(f, Jdops)
             set_time!(Hop, t)
@@ -91,7 +91,7 @@ function master_nh_dynamic_function(Hnh::AbstractTimeDependentOperator, Js)
 
     return let Hop = Hnhtup, Hdop = Htdagup, Jops = Js_tup, Jdops = Jdags_tup
         function _tdop_master_wrapper_2(t, _)
-            f = Base.Fix2(set_time!, t)
+            f = op -> set_time!(op, t)
             foreach(f, Jops)
             foreach(f, Jdops)
             set_time!(Hop, t)
