@@ -26,7 +26,8 @@ jobs:
       - uses: actions/checkout@v7
       - uses: julia-actions/setup-julia@v3
         with:
-          version: '1.12'
+          # PrecompileTools 1.2.1 predates Julia 1.12's world-age changes.
+          version: 'min'
       - uses: julia-actions/cache@v3
         with:
           delete-old-caches: false
@@ -36,7 +37,11 @@ jobs:
           skip: LinearAlgebra,Random,SparseArrays
           mode: 'forcedeps'
       - uses: julia-actions/julia-buildpkg@v1
-      - uses: julia-actions/julia-runtest@v1
-        with:
-          allow_reresolve: false
-          force_latest_compatible_version: false
+      # Pkg.test can re-resolve split test environments on Julia < 1.12.
+      - name: Run tests with locked minimum dependencies
+        shell: julia --color=yes --project=test {0}
+        run: |
+          using Pkg
+          Pkg.instantiate()
+          Pkg.status(; mode=Pkg.PKGMODE_MANIFEST)
+          include("test/runtests.jl")
