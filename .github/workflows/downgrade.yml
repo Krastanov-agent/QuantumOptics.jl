@@ -44,4 +44,4 @@ jobs:
           using Pkg
           Pkg.instantiate()
           Pkg.status(; mode=Pkg.PKGMODE_MANIFEST)
-          include("test/runtests.jl")
+          include(joinpath(pwd(), "test", "runtests.jl"))
